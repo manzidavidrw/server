@@ -15,7 +15,6 @@ public class PersonRepository {
 
     @PostConstruct
     public void initialize() {
-        // Add some sample data
         database.add(new Person(1, "John", "Doe", "555-1234", "john.doe@cst.edu"));
         database.add(new Person(1, "Jane", "Smith", "555-5678", "jane.smith@cst.edu"));
         database.add(new Person(2, "Alice", "Johnson", "555-9012", "alice.johnson@cst.edu"));

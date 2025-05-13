@@ -1,4 +1,3 @@
-// 1. First, let's create a model class for Employee/Student
 package com.cst.ict.model;
 
 import java.io.Serializable;

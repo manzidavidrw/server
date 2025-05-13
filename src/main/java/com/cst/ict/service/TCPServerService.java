@@ -101,17 +101,13 @@ public class TCPServerService implements CommandLineRunner {
                     if (parts.length < 3) {
                         return "ERROR: Insufficient parameters";
                     }
-                    if (parts.length == 3) {
-                        // Last name and department number
+
+                    String secondArgs = parts[2];
+                    try {
+                        int deptNumber = Integer.parseInt(secondArgs);
                         String lastName = parts[1];
-                        try {
-                            int deptNumber = Integer.parseInt(parts[2]);
-                            return getEmailByLastNameAndDepartment(lastName, deptNumber);
-                        } catch (NumberFormatException e) {
-                            return "ERROR: Invalid department number";
-                        }
-                    } else {
-                        // First name and last name
+                        return getEmailByLastNameAndDepartment(lastName, deptNumber);
+                    } catch (NumberFormatException e) {
                         String firstName = parts[1];
                         String lastName = parts[2];
                         return getEmailByFirstNameAndLastName(firstName, lastName);
@@ -121,21 +117,21 @@ public class TCPServerService implements CommandLineRunner {
                     if (parts.length < 3) {
                         return "ERROR: Insufficient parameters";
                     }
-                    if (parts.length == 3) {
-                        // Last name and department number
+
+                    String secondArg = parts[2];
+
+                    // Check if secondArg is an integer (i.e., DeptNumber)
+                    try {
+                        int deptNumber = Integer.parseInt(secondArg);
                         String lastName = parts[1];
-                        try {
-                            int deptNumber = Integer.parseInt(parts[2]);
-                            return getPhoneByLastNameAndDepartment(lastName, deptNumber);
-                        } catch (NumberFormatException e) {
-                            return "ERROR: Invalid department number";
-                        }
-                    } else {
-                        // First name and last name
+                        return getPhoneByLastNameAndDepartment(lastName, deptNumber);
+                    } catch (NumberFormatException e) {
+                        // Not an integer, treat as FirstName + LastName
                         String firstName = parts[1];
                         String lastName = parts[2];
                         return getPhoneByFirstNameAndLastName(firstName, lastName);
                     }
+
 
                 default:
                     return "ERROR: Unknown request type";
@@ -181,6 +177,7 @@ public class TCPServerService implements CommandLineRunner {
                 return "ERROR: Person not found with name " + firstName + " " + lastName;
             }
         }
+
 
         private String getPhoneByLastNameAndDepartment(String lastName, int deptNumber) {
             Optional<Person> personOpt = personRepository.findByLastNameAndDepartmentNumber(lastName, deptNumber);
